@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\VehicleController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -14,6 +15,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+Route::prefix('vehicles')->group(function () {
+    Route::get('/', [VehicleController::class, 'index']);
+    Route::get('/{vin}', [VehicleController::class, 'show']);
+    Route::post('/', [VehicleController::class, 'store']);
+    Route::patch('/{vin}', [VehicleController::class, 'update']);
+    Route::delete('/{vin}', [VehicleController::class, 'destroy']);
 });
