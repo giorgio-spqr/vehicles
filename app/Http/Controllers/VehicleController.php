@@ -53,10 +53,10 @@ class VehicleController extends Controller
     {
         $vehicle = Vehicle::query()
             ->where(['vin' => $vin])
-            ->with(['car_options', 'specifications'])
+            ->with(['specifications'])
             ->firstOrFail();
 
-        return new VehicleResource($vehicle);
+        return response()->json($vehicle->specifications->pluck('name'));
     }
 
     /**
@@ -72,6 +72,10 @@ class VehicleController extends Controller
             ->where(['vin' => $vin])
             ->with(['car_options', 'specifications'])
             ->firstOrFail();
+
+        if ($vehicle->is_imported) {
+            abort(403);
+        }
 
         $result = DB::transaction(function () use ($request, $vehicle) {
             $vehicle->update($request->validated());
@@ -95,6 +99,9 @@ class VehicleController extends Controller
     public function destroy(string $vin)
     {
         $vehicle = Vehicle::query()->where(['vin' => $vin])->firstOrFail();
+        if ($vehicle->is_imported) {
+            abort(403);
+        }
         $vehicle->delete();
 
         return response()->json('Deleted successfully');

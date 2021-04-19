@@ -68,8 +68,10 @@ class VehicleProviderSync extends Command
 
         //Delete vehicles that are not present anymore by external provider
         DB::transaction(function () use ($vins) {
-            Vehicle::query()->whereNotIn('vin', $vins)->delete();
-
+            Vehicle::query()
+                ->whereNotIn('vin', $vins)
+                ->where('is_imported', true)
+                ->delete();
         });
 
         return 1;

@@ -37,6 +37,7 @@ class Vehicle extends Model
         'mileage',
         'kilometrage',
         'license_plate',
+        'is_imported',
     ];
 
     public function specifications()

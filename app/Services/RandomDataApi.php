@@ -48,8 +48,9 @@ class RandomDataApi
             $data[$i]['mileage']          = (string) $vehicle->mileage;
             $data[$i]['kilometrage']      = (string) $vehicle->kilometrage;
             $data[$i]['license_plate']    = (string) $vehicle->{'license-plate'};
-            $data[$i]['car_options']      = (array) $vehicle->{'car-type'};
+            $data[$i]['car_options']      = (array) $vehicle->{'car-options'}->{'car-option'};
             $data[$i]['specifications']   = (array) $vehicle->specs->spec;
+            $data[$i]['is_imported']      = true;
         }
         return $data;
     }

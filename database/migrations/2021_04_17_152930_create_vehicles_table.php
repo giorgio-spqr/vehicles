@@ -26,6 +26,7 @@ class CreateVehiclesTable extends Migration
             $table->string('mileage');
             $table->string('kilometrage');
             $table->string('license_plate');
+            $table->boolean('is_imported')->default(0);
             $table->timestamps();
         });
     }
